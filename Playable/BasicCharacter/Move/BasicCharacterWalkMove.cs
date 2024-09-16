@@ -8,7 +8,7 @@ public partial class BasicCharacterWalkMove : AMove
 {
     public override int Priority { get; init; } = 2;
 
-    [Export] public float Speed { get; set; } = 3.0f;
+    [Export] public float Speed { get; set; } = 5.0f;
     [Export] public float TurnSpeed { get; set; } = 10.0f;
     [Export] public float LandingHeight = 2.163f;
 
@@ -42,7 +42,7 @@ public partial class BasicCharacterWalkMove : AMove
        {
            // Rotate gradually towards input direction
            Humanoid.Velocity = faceDirection.Rotated(Vector3.Up, (float)(Mathf.Sign(angle) * TurnSpeed * delta)) * Speed;
-           Humanoid.RotateY((float)(Mathf.Sign(angle) * TurnSpeed * delta));
+           Humanoid.RotateY((float)(Mathf.Sign(angle) * TrackingAngularSpeed * delta));
        }
        else
        {
