@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Common"
 
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+theme/default_font_generate_mipmaps=true
+
 [input]
 
 mouse_mode_switch={

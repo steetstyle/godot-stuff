@@ -58,9 +58,13 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 	}
 
 	[Export] public AnimationLibrary AnimationLibrary;
+	[Export] public Node SplitBodyAnimatorNode;
 	private void RunScriptCall()
 	{
-		var splitBodyAnimator = GetNode<SplitBodyAnimator>("../../../../Model/SplitBodyAnimator");
+		if (SplitBodyAnimatorNode == null) return;
+
+		var splitBodyAnimator = (SplitBodyAnimator)SplitBodyAnimatorNode;
+
 		var player = FindAnimationPlayer(this);
 		var skeleton = FindSkeleton(this);
 		GD.Print($"Animations found: {player.GetAnimationList().Length}");
