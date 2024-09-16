@@ -1,6 +1,6 @@
 using Common.Playable.Basic.Input;
 using Godot;
-using InputGatherer = Common.Playable.FootballPlayer.Input.InputGatherer;
+using InputGatherer = Common.Playable.BasicCharacter.Input.InputGatherer;
 
 namespace Common.Playable.Basic;
 

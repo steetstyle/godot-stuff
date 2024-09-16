@@ -16,14 +16,12 @@ public partial class SplitBodyAnimator : Node
 
 	public void UpdateBodyAnimations()
 	{
-		if (TorsoAnimationPlayer == null || LegsAnimationPlayer == null) return;
 		UpdatePlayMode();
 		UpdateAnimations();
 	}
 
 	public void UpdateLegAnimations()
 	{
-		if (TorsoAnimationPlayer == null || LegsAnimationPlayer == null) return;
 		var currentMove = Model.GetCurrentMove();
 		UpdatePlayMode();
 		PlayLegAnimation(currentMove.CurrentLegMove.Animation);
@@ -31,23 +29,21 @@ public partial class SplitBodyAnimator : Node
 
 	private void UpdateAnimations()
 	{
-		if (TorsoAnimationPlayer == null || LegsAnimationPlayer == null) return;
 		var currentMove = Model.GetCurrentMove();
 		if (FullBodyMode)
 		{
-			if (LegsAnimationPlayer.CurrentAnimation == ConvertToTorsoAnimationName(currentMove.Animation)) return;
-			PlayTorsoAnimation(currentMove.Animation);
-			PlayLegAnimation(currentMove.Animation);
+			if(TorsoAnimationPlayer.CurrentAnimation != ConvertToTorsoAnimationName(currentMove.Animation))
+				PlayTorsoAnimation(currentMove.Animation);
+			if (LegsAnimationPlayer.CurrentAnimation != ConvertToLegAnimationName(currentMove.Animation))
+				PlayLegAnimation(currentMove.Animation);
 			Synchronize();
 		}
 		else
 		{
-			if (TorsoAnimationPlayer == null) return;
-				if(TorsoAnimationPlayer.CurrentAnimation != ConvertToTorsoAnimationName(currentMove.Animation))
-					PlayTorsoAnimation(currentMove.Animation);
-			if (LegsAnimationPlayer == null) return;
-				if (LegsAnimationPlayer.CurrentAnimation != ConvertToLegAnimationName(currentMove.Animation))
-					PlayLegAnimation(currentMove.Animation);
+			if(TorsoAnimationPlayer.CurrentAnimation != ConvertToTorsoAnimationName(currentMove.Animation))
+				PlayTorsoAnimation(currentMove.Animation);
+			if (LegsAnimationPlayer.CurrentAnimation != ConvertToLegAnimationName(currentMove.Animation))
+				PlayLegAnimation(currentMove.Animation);
 		}
 	}
 
@@ -86,14 +82,13 @@ public partial class SplitBodyAnimator : Node
 
 	public void SetSpeedScale(float speedScale)
 	{
-		if (TorsoAnimationPlayer == null || LegsAnimationPlayer == null) return;
 		TorsoAnimationPlayer.SpeedScale = speedScale;
 		LegsAnimationPlayer.SpeedScale = speedScale;
 	}
 
 	public void SetRootMotionTrack(string boneName)
 	{
-		TorsoAnimationPlayer.RootMotionTrack = boneName;
+		//TorsoAnimationPlayer.RootMotionTrack = boneName;
 		LegsAnimationPlayer.RootMotionTrack = boneName;
 	}
 }

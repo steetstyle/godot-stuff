@@ -3,11 +3,11 @@ using Godot;
 
 namespace Common.Playable.Basic.Input;
 
-public partial class InputGatherer : Node, IInputGatherer<FootballPlayer.Input.InputPackage>
+public partial class InputGatherer : Node, IInputGatherer<BasicCharacter.Input.InputPackage>
 {
-	public FootballPlayer.Input.InputPackage Gather()
+	public BasicCharacter.Input.InputPackage Gather()
 	{
-		var inputPackage = new FootballPlayer.Input.InputPackage();
+		var inputPackage = new BasicCharacter.Input.InputPackage();
 		
 		inputPackage.Actions.Add("Idle");
 

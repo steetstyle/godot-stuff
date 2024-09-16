@@ -69,7 +69,7 @@ public abstract partial class AMove : Node
 
     public AMove CurrentLegMove { get; set; }
 
-    public bool TracksInputVector(double delta)
+    private bool TracksInputVector(double delta)
     {
         return MoveRepository.TracksInputVector(BackendAnimation, GetProgress());
     }

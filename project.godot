@@ -15,6 +15,10 @@ run/main_scene="res://Maps/Main.tscn"
 config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/initial_screen=2
+
 [dotnet]
 
 project/assembly_name="Common"

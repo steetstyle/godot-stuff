@@ -7,7 +7,7 @@ namespace Common.Playable.Animation;
 [Tool]
 public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 {
-	private const string BonePrefix = "mixamorig5_";
+	private const string BonePrefix = "mixamorig_";
 	public int[] GetHierarchyIndexes(Skeleton3D skeleton, int rootIdx)
 	{
 		var indexes = new List<int>();
@@ -86,16 +86,18 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 		{
 			if (!RootMotionAnimation(animationName)) continue;
 			var animation = player.GetAnimation(animationName);
+			
 			var hipsPositionTrack = animation.FindTrack($"Armature/Skeleton3D:{BonePrefix}Hips", Godot.Animation.TrackType.Position3D);
-			var firstTrackPosition = animation.TrackGetKeyValue(hipsPositionTrack, 0).AsVector3();
-			var animationTrackCount = animation.TrackGetKeyCount(hipsPositionTrack);
-			animation.TrackSetKeyValue(hipsPositionTrack, animationTrackCount - 1, firstTrackPosition);
-			for (var track = 0; track < animationTrackCount; track++)
+			var animationPositionTrackCount = animation.TrackGetKeyCount(hipsPositionTrack);
+			for (var track = 1; track < animationPositionTrackCount; track++)
 			{
-				var trackPosition = animation.TrackGetKeyValue(hipsPositionTrack, track);
-				var positionWithoutZ = trackPosition.AsVector3();
-				positionWithoutZ.Z = firstTrackPosition.Z;
-				animation.TrackSetKeyValue(hipsPositionTrack, track, positionWithoutZ);
+				animation.TrackRemoveKey(hipsPositionTrack, track);
+			}
+			
+			var hipsRotationTrack = animation.FindTrack($"Armature/Skeleton3D:{BonePrefix}Hips", Godot.Animation.TrackType.Rotation3D);
+			for (var track = 1; track < animationPositionTrackCount; track++)
+			{
+				animation.TrackRemoveKey(hipsRotationTrack, track);
 			}
 		}
 
@@ -104,7 +106,7 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 
 	private static bool RootMotionAnimation(string animation)
 	{
-		return animation.Contains("Idle") || animation.Contains("Walk");
+		return animation.Contains("Idle") || animation.Contains("Walk") || animation.Contains("idle") || animation.Contains("walk");
 	}
 
 	private static AnimationPlayer SaveAnimations(int[] boneIndexes, Skeleton3D skeleton, AnimationPlayer player, string suffix)
@@ -125,7 +127,7 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 				var trackPath = animation.TrackGetPath(track).ToString();
 				if(SkipTrackPath(trackPath)) continue;
 
-				var boneName = trackPath.Replace("Armature/Skeleton3D:", "");
+				var boneName = trackPath.Replace("Character/Skeleton3D:", "");
 				var boneIndex = skeleton.FindBone(boneName);
 				if (boneIndexes.Contains(boneIndex))
 				{
@@ -146,19 +148,13 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 					startEndMismatch = true;
 					break; // No need to check further if one track doesn't match
 				}
-
-				// If start and end positions don't match, rewind (set loop to non-linear)
-				//newAnimation.SetLoopMode(startEndMismatch
-				//	? Godot.Animation.LoopModeEnum.Pingpong
-				//	// If start and end positions match, set to linear loop mode
-				//	: Godot.Animation.LoopModeEnum.Linear);
 				newAnimation.SetLoopMode(Godot.Animation.LoopModeEnum.Linear);
 			}
 
-			ResourceSaver.Save(newAnimation, $"res://Playable/FootballPlayer/Assets/Processed/Animations/{suffix}/{animationName}_{suffix}.res");
+			ResourceSaver.Save(newAnimation, $"res://Playable/BasicCharacter/Assets/Animations/{suffix}/{animationName}_{suffix}.res");
 			animationLibrary.AddAnimation($"{animationName}_{suffix}", newAnimation);
 		}
-		ResourceSaver.Save(animationLibrary, $"res://Playable/FootballPlayer/Assets/Processed/Animations/{suffix}/animation_library_{suffix}.res");
+		ResourceSaver.Save(animationLibrary, $"res://Playable/BasicCharacter/Assets/Animations/{suffix}/animation_library_{suffix}.res");
 
 		var animationPlayer = new AnimationPlayer();
 		animationPlayer.AddAnimationLibrary("", animationLibrary);
@@ -168,12 +164,12 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 
 	private static bool LoopModeAnimation(string animation)
 	{
-		return animation.Contains("Idle") || animation.Contains("Walk") || animation.Contains("Run");
+		return animation.Contains("Idle") || animation.Contains("Walk") || animation.Contains("Run") || animation.Contains("idle") || animation.Contains("walk") || animation.Contains("run");
 	}
 	
 	private static bool SkipAnimation(string animation)
 	{
-		return animation.Contains("Armature") || animation.Contains("Action") || animation.Contains("Layer");
+		return animation.Contains("Armature") || animation.Contains("Action") || animation.Contains("Layer") || animation.Contains("Character");
 	}
 	
 	private static bool SkipTrackPath(string animation)
