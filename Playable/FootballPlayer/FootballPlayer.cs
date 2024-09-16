@@ -1,0 +1,24 @@
+using Godot;
+using InputGatherer = Common.Playable.FootballPlayer.Input.InputGatherer;
+
+namespace Common.Playable.FootballPlayer;
+
+public partial class FootballPlayer : CharacterBody3D
+{
+    [Export] public InputGatherer InputGatherer;
+    [Export] public Model Model;
+
+    public override void _Ready()
+    {
+        AddToGroup("players");
+        InputGatherer ??= GetNode<InputGatherer>("InputGatherer");
+        Model ??= GetNode<Model>("Model");
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        var inputPackage = InputGatherer.Gather();
+        Model.Update(inputPackage, delta);
+        inputPackage.QueueFree();
+    }
+}

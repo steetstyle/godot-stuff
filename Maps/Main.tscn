@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhdg8gg84joyf"]
+
+[ext_resource type="PackedScene" uid="uid://cxambvig38q74" path="res://Resource/StandartWorldEnvironement.tscn" id="1_du3gn"]
+[ext_resource type="PackedScene" uid="uid://slygbhskhut6" path="res://Playable/FootballPlayer/FootballPlayer.tscn" id="3_njw6a"]
+[ext_resource type="PackedScene" uid="uid://cnpqmimacd513" path="res://Resource/Grass/GrassGround.tscn" id="3_vp0es"]
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_du3gn")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+directional_shadow_split_1 = 0.0
+directional_shadow_split_2 = 0.0
+directional_shadow_split_3 = 0.151
+directional_shadow_fade_start = 0.396
+directional_shadow_max_distance = 3.4
+directional_shadow_pancake_size = 2.1
+
+[node name="GrassGround" parent="." instance=ExtResource("3_vp0es")]
+script = null
+
+[node name="FootballPlayer" parent="." instance=ExtResource("3_njw6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11579, 0.25, 0.028445)

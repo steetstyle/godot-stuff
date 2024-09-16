@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxambvig38q74"]
+
+[ext_resource type="Sky" uid="uid://pxnxefl4qkhe" path="res://Resource/Sky/Sky.tres" id="1_t11jw"]
+
+[sub_resource type="Environment" id="Environment_okbs6"]
+sky = ExtResource("1_t11jw")
+ambient_light_source = 3
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_okbs6")
