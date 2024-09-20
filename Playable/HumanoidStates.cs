@@ -35,7 +35,7 @@ public partial class HumanoidStates : Node
 
     public int MovesPrioritySort(string a, string b)
     {
-        return Moves[b].Priority - Moves[a].Priority;
+        return Moves[b].GetPriority() - Moves[a].GetPriority();
     }
 
     public AMove GetMoveByName(string moveName)

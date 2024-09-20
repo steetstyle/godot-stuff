@@ -14,7 +14,7 @@ public enum MoveStatus
 
 public abstract partial class AMove : Node
 {
-    public (MoveStatus, string?) BestInputThatCanBePaid(IInputPackage inputPackage)
+    protected (MoveStatus, string?) BestInputThatCanBePaid(IInputPackage inputPackage)
     {
         inputPackage.Actions.Sort(Container.MovesPrioritySort);
         var actions = inputPackage.Actions.Where(action => Resource.CanBePaid(Container.Moves[action]));
@@ -130,9 +130,12 @@ public abstract partial class AMove : Node
     public double Duration { get; set; }
     [Export] public string BackendAnimation { get; set; }
     [Export] public string Animation { get; set; }
-    public virtual int Priority { get; init; } = 0;
     [Export] public bool HasForcedMove { get; set; }
     [Export] public string? ForcedMove { get; set; }
-    public double EnterStateTime { get; set; }
+    protected double EnterStateTime { get; set; }
 
+    public virtual int GetPriority()
+    {
+        return 0;
+    }
 }

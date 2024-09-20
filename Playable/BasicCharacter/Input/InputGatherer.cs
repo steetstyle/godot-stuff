@@ -13,7 +13,7 @@ public partial class InputGatherer : Node, IInputGatherer<InputPackage>
 
 		inputPackage.InputDirection = Godot.Input.GetVector("right", "left", "forward", "backward");
 		if(inputPackage.InputDirection != Vector2.Zero)
-			inputPackage.Actions.Add("Walk");
+			inputPackage.Actions.Add(Godot.Input.IsActionPressed("sprint") ? "Run" : "Walk");
 
 		return inputPackage;
 	}

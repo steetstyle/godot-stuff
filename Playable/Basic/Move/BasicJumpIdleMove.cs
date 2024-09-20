@@ -6,8 +6,6 @@ namespace Common.Playable.Basic.Move;
 
 public partial class BasicJumpIdleMove : AMove
 {
-    public override int Priority { get; init; } = 10;
-
     [Export] public Downcast Downcast;
     [Export] public float LandingHeight = 2.163f;
     [Export] public float DeltaVectorLength = 6.0f;
@@ -58,6 +56,11 @@ public partial class BasicJumpIdleMove : AMove
     {
         _jumpDirection = Humanoid.Basis.Z * Mathf.Clamp(Humanoid.Velocity.Length(), 1, 999999);
         _jumpDirection.Y = 0;
+    }
+
+    public override int GetPriority()
+    {
+        return 10;
     }
 }
 

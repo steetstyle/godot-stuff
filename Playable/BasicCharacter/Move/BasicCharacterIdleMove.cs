@@ -5,7 +5,6 @@ namespace Common.Playable.BasicCharacter.Move;
 
 public partial class BasicCharacterIdleMove : AMove
 {
-    public override int Priority { get; init; } = 1;
 
     protected override void TransitionLegsState(IInputPackage inputPackage, double delta)
     {
@@ -15,6 +14,11 @@ public partial class BasicCharacterIdleMove : AMove
     public override bool TracksPartialMove()
     {
         return true;
+    }
+
+    protected override (MoveStatus, string) DefaultLifeCycle(IInputPackage inputPackage)
+    {
+        return BestInputThatCanBePaid(inputPackage);
     }
 
     protected override void Update(IInputPackage inputPackage, double delta)
@@ -29,5 +33,10 @@ public partial class BasicCharacterIdleMove : AMove
     public override void OnExitState()
     {
         SplitBodyAnimator.SetSpeedScale(1);
+    }
+
+    public override int GetPriority()
+    {
+        return 1;
     }
 }

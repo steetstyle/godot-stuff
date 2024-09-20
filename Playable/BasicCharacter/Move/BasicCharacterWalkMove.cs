@@ -6,11 +6,8 @@ namespace Common.Playable.BasicCharacter.Move;
 
 public partial class BasicCharacterWalkMove : AMove
 {
-    public override int Priority { get; init; } = 2;
-
-    [Export] public float Speed { get; set; } = 5.0f;
-    [Export] public float TurnSpeed { get; set; } = 10.0f;
-    [Export] public float LandingHeight = 2.163f;
+    [Export] public virtual float Speed { get; set; } = 5.0f;
+    [Export] public virtual float TurnSpeed { get; set; } = 10.0f;
 
     protected override void TransitionLegsState(IInputPackage inputPackage, double delta)
     {
@@ -24,6 +21,11 @@ public partial class BasicCharacterWalkMove : AMove
     protected override void Update(IInputPackage inputPackage, double delta)
     {
         Humanoid.MoveAndSlide();
+    }
+
+    protected override (MoveStatus, string) DefaultLifeCycle(IInputPackage inputPackage)
+    {
+        return BestInputThatCanBePaid(inputPackage);
     }
 
     // Processes the input and adjusts humanoid's velocity and rotation.
@@ -65,5 +67,10 @@ public partial class BasicCharacterWalkMove : AMove
     {
         SplitBodyAnimator.SetRootMotionTrack("");
         SplitBodyAnimator.SetSpeedScale(1);
+    }
+    
+    public override int GetPriority()
+    {
+        return 2;
     }
 }

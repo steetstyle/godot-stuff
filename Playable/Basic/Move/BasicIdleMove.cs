@@ -5,7 +5,6 @@ namespace Common.Playable.Basic.Move;
 
 public partial class BasicIdleMove : AMove
 {
-    public override int Priority { get; init; } = 1;
 
     protected override (MoveStatus, string) DefaultLifeCycle(IInputPackage inputPackage)
     {
@@ -23,5 +22,10 @@ public partial class BasicIdleMove : AMove
 
     protected override void Update(IInputPackage inputPackage, double delta)
     {
+    }
+
+    public override int GetPriority()
+    {
+        return 1;
     }
 }

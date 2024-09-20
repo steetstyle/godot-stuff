@@ -6,8 +6,6 @@ namespace Common.Playable.Basic.Move;
 
 public partial class BasicRunMove : AMove
 {
-    public override int Priority { get; init; } = 2;
-
     [Export] public float Speed { get; set; } = 5.0f;
     [Export] public float TurnSpeed { get; set; } = 1.0f;
     [Export] public float LandingHeight = 2.163f;
@@ -67,5 +65,10 @@ public partial class BasicRunMove : AMove
     public override void OnExitState()
     {
         SplitBodyAnimator.SetSpeedScale(1);
+    }
+
+    public override int GetPriority()
+    {
+        return 2;
     }
 }

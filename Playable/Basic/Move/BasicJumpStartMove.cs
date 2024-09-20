@@ -5,8 +5,6 @@ namespace Common.Playable.Basic.Move;
 
 public partial class BasicJumpStartMove : AMove
 {
-    public override int Priority { get; init; } = 10;
-
     private const float Speed = 3.0f;
     private const float VerticalSpeedAdded = 20.0f;
 
@@ -46,5 +44,10 @@ public partial class BasicJumpStartMove : AMove
     public override void OnEnterState()
     {
         Humanoid.Velocity = Humanoid.Velocity.Normalized() * Speed;
+    }
+
+    public override int GetPriority()
+    {
+        return 10;
     }
 }
