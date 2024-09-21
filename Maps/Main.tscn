@@ -2,22 +2,30 @@
 
 [ext_resource type="PackedScene" uid="uid://cxambvig38q74" path="res://Resource/StandartWorldEnvironement.tscn" id="1_du3gn"]
 [ext_resource type="PackedScene" uid="uid://uwwsgwgr43ev" path="res://Playable/BasicCharacter/BasicCharacter.tscn" id="3_nnf3v"]
-[ext_resource type="PackedScene" uid="uid://cnpqmimacd513" path="res://Resource/Grass/GrassGround.tscn" id="3_vp0es"]
+[ext_resource type="PackedScene" uid="uid://bckw2apdl7uoj" path="res://Terrains/TerrainManager.tscn" id="3_rgfgj"]
 
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("1_du3gn")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-directional_shadow_split_1 = 0.0
-directional_shadow_split_2 = 0.0
-directional_shadow_split_3 = 0.151
-directional_shadow_fade_start = 0.396
-directional_shadow_max_distance = 3.4
-directional_shadow_pancake_size = 2.1
-
-[node name="GrassGround" parent="." instance=ExtResource("3_vp0es")]
-script = null
+layers = 2
+light_energy = 1.247
+light_indirect_energy = 0.753
+light_volumetric_fog_energy = 0.647
+light_angular_distance = 12.52
+light_cull_mask = 4293918721
+directional_shadow_split_2 = 0.068
+directional_shadow_split_3 = 0.169
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 0.714
+directional_shadow_max_distance = 60.8
+directional_shadow_pancake_size = 39.2
 
 [node name="BasicCharacter" parent="." instance=ExtResource("3_nnf3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.192293, 0.25, 0.327648)
+collision_layer = 2
+collision_mask = 2
+
+[node name="TerrainManager" parent="." instance=ExtResource("3_rgfgj")]
+PlayerPath = NodePath("../BasicCharacter")

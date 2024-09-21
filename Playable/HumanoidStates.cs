@@ -22,12 +22,14 @@ public partial class HumanoidStates : Node
         {
             if (children is not AMove move) continue;
 
-            move.Humanoid = Humanoid;
-            move.SplitBodyAnimator = SplitBodyAnimator;
-            move.Resource = Resource;
-            move.MoveRepository = MoveRepository;
-            move.CameraMount = CameraMount;
-            move.Container = this;
+            move.BuildMove(
+                Humanoid,
+                SplitBodyAnimator,
+                Resource,
+                MoveRepository,
+                CameraMount,
+                this
+            );
             move.Duration = MoveRepository.GetDuration(move.BackendAnimation);
             Moves.Add(move.Name, move);
         }

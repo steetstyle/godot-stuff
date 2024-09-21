@@ -6,8 +6,8 @@ namespace Common.Playable.BasicCharacter.Move;
 
 public partial class BasicCharacterWalkMove : AMove
 {
-    [Export] public virtual float Speed { get; set; } = 5.0f;
-    [Export] public virtual float TurnSpeed { get; set; } = 10.0f;
+    [Export] public float Speed { get; set; } = 3.0f;
+    [Export] public float TurnSpeed { get; set; } = 2.0f;
 
     protected override void TransitionLegsState(IInputPackage inputPackage, double delta)
     {
@@ -40,10 +40,10 @@ public partial class BasicCharacterWalkMove : AMove
         var angle = faceDirection.SignedAngleTo(inputDirection, Vector3.Up);
 
         // Adjust humanoid velocity and rotation based on the input and current facing direction.
-       if (Mathf.Abs(angle) >= TurnSpeed * delta)
+       if (Mathf.Abs(angle) >= TrackingAngularSpeed * delta)
        {
            // Rotate gradually towards input direction
-           Humanoid.Velocity = faceDirection.Rotated(Vector3.Up, (float)(Mathf.Sign(angle) * TurnSpeed * delta)) * Speed;
+           Humanoid.Velocity = faceDirection.Rotated(Vector3.Up, (float)(Mathf.Sign(angle) * TrackingAngularSpeed * delta)) * Speed;
            Humanoid.RotateY((float)(Mathf.Sign(angle) * TrackingAngularSpeed * delta));
        }
        else
@@ -59,13 +59,13 @@ public partial class BasicCharacterWalkMove : AMove
 
     public override void OnEnterState()
     {
-        SplitBodyAnimator.SetRootMotionTrack("Character/Skeleton3D:mixamorig_Root");
+        //SplitBodyAnimator.SetRootMotionTrack("Character/Skeleton3D:mixamorig_Root");
     }
 
     // Reset the animator speed when exiting the state
     public override void OnExitState()
     {
-        SplitBodyAnimator.SetRootMotionTrack("");
+        //SplitBodyAnimator.SetRootMotionTrack("");
         SplitBodyAnimator.SetSpeedScale(1);
     }
     

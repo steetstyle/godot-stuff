@@ -93,49 +93,66 @@ public abstract partial class AMove : Node
         EnterStateTime = Time.GetUnixTimeFromSystem();
     }
 
-    public double GetProgress()
+    protected double GetProgress()
     {
         var now = Time.GetUnixTimeFromSystem();
         return now - EnterStateTime;
     }
 
-    public bool WorksLongerThan(double time)
+    protected bool WorksLongerThan(double time)
     {
         return GetProgress() >= time;
     }
 
-    public bool WorksLessThan(double time)
+    protected bool WorksLessThan(double time)
     {
         return GetProgress() < time;
     }
 
-    public bool WorksBetween(double start, double end)
+    protected bool WorksBetween(double start, double end)
     {
         var progress = GetProgress();
         return start > progress && progress <= end;
     }
 
-    public float GetStaminaCost()
+    public virtual float GetStaminaCost()
     {
         return 0.0f;
     }
 
-    public CharacterBody3D Humanoid { get; set; }
-    public SplitBodyAnimator SplitBodyAnimator { get; set; }
-    public Resource Resource { get; set; }
-    public HumanoidStates Container { get; set; }
-    public MoveRepository MoveRepository { get; set; }
-    public CameraMount CameraMount { get; set; }
-    [Export]public string Name { get; set; }
+    protected CharacterBody3D Humanoid { get; set; }
+    protected SplitBodyAnimator SplitBodyAnimator { get; set; }
+    protected Resource Resource { get; set; }
+    protected HumanoidStates Container { get; set; }
+    protected MoveRepository MoveRepository { get; set; }
+    protected CameraMount CameraMount { get; set; }
     public double Duration { get; set; }
+    [Export] public string Name { get; set; }
     [Export] public string BackendAnimation { get; set; }
     [Export] public string Animation { get; set; }
     [Export] public bool HasForcedMove { get; set; }
     [Export] public string? ForcedMove { get; set; }
-    protected double EnterStateTime { get; set; }
+    private double EnterStateTime { get; set; }
 
     public virtual int GetPriority()
     {
         return 0;
+    }
+
+    public void BuildMove(
+        CharacterBody3D humanoid,
+        SplitBodyAnimator splitBodyAnimator,
+        Resource resource, 
+        MoveRepository moveRepository, 
+        CameraMount cameraMount,
+        HumanoidStates container
+    )
+    {
+        Humanoid = humanoid;
+        SplitBodyAnimator = splitBodyAnimator;
+        Resource = resource;
+        MoveRepository = moveRepository;
+        CameraMount = cameraMount;
+        Container = container;
     }
 }

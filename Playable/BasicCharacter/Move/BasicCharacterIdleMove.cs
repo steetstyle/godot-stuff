@@ -1,5 +1,6 @@
 using Common.Playable.Input;
 using Common.Playable.Move;
+using Godot;
 
 namespace Common.Playable.BasicCharacter.Move;
 
