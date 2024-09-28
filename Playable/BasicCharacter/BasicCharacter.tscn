@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://Playable/Resource.cs" id="4_gi2mm"]
 [ext_resource type="AnimationLibrary" uid="uid://ddeceufoae5xb" path="res://Playable/BasicCharacter/Assets/Animations/basic_character_animation_library.res" id="5_b3mft"]
 [ext_resource type="Script" path="res://Playable/HumanoidStates.cs" id="5_r4n7c"]
-[ext_resource type="AnimationLibrary" uid="uid://d4livl5m46v61" path="res://Playable/BasicCharacter/Assets/Animations/torso/animation_library_torso.res" id="6_cfmtm"]
-[ext_resource type="AnimationLibrary" uid="uid://bvbld4kyu3bmt" path="res://Playable/BasicCharacter/Assets/Animations/legs/animation_library_legs.res" id="7_52ye3"]
+[ext_resource type="AnimationLibrary" uid="uid://2nxrnmgtoj62" path="res://Playable/BasicCharacter/Assets/Animations/torso/animation_library_torso.res" id="6_cfmtm"]
+[ext_resource type="AnimationLibrary" uid="uid://dbrfr635uqwxa" path="res://Playable/BasicCharacter/Assets/Animations/legs/animation_library_legs.res" id="7_52ye3"]
 [ext_resource type="Script" path="res://Playable/Move/MoveRepository.cs" id="8_lwvpr"]
 [ext_resource type="Script" path="res://Playable/Move/MoveData.cs" id="9_4we5f"]
 [ext_resource type="Script" path="res://Playable/BasicCharacter/Move/BasicCharacterIdleMove.cs" id="9_rqj5i"]
@@ -4624,13 +4624,16 @@ _data = {
 [node name="BasicCharacter" type="CharacterBody3D"]
 script = ExtResource("1_88hwe")
 
-[node name="InputGatherer" type="Node" parent="."]
+[node name="InputGatherer" type="Node" parent="." node_paths=PackedStringArray("PlayerCamera", "Player")]
 script = ExtResource("2_t5ldh")
+PlayerCamera = NodePath("../CameraMount/PlayerCamera")
+Player = NodePath("..")
 
 [node name="CameraMount" type="Node3D" parent="." node_paths=PackedStringArray("PlayerCamera", "Player")]
 script = ExtResource("2_wsdwl")
 PlayerCamera = NodePath("PlayerCamera")
 Player = NodePath("..")
+CameraHeightOffset = 1.0
 
 [node name="PlayerCamera" type="Camera3D" parent="CameraMount"]
 transform = Transform3D(-1, 1.0677e-07, -1.0677e-07, 0, 0.707107, 0.707107, 1.50996e-07, 0.707107, -0.707107, -1, 6, -2)
@@ -5176,6 +5179,7 @@ Animation = "walking"
 
 [node name="Run" type="Node" parent="Model/HumanoidStates"]
 script = ExtResource("10_lp5xw")
+Speed = 5.0
 Name = "Run"
 BackendAnimation = "RunParams"
 Animation = "running"

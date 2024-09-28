@@ -77,7 +77,7 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 		splitBodyAnimator.LegsAnimationPlayer.RemoveAnimationLibrary("");
 		splitBodyAnimator.LegsAnimationPlayer.AddAnimationLibrary("",legAnimationPlayer.GetAnimationLibrary(""));
 
-		SetAutomaticBlendingTimes();
+		//SetAutomaticBlendingTimes();
 	}
 
 	private static AnimationPlayer FixRootMotion(AnimationPlayer player)
@@ -203,10 +203,10 @@ public partial class MixamoSkeleton :  Skeleton3D, IPlayableSkeletonAccessor
 				var toAnim = animations[j];
 				var blendTime = CalculateBlendTime(fromAnim, toAnim, player);
 
-				splitBodyAnimator.TorsoAnimationPlayer.SetBlendTime(fromAnim, toAnim, 1);
-				splitBodyAnimator.TorsoAnimationPlayer.SetBlendTime(toAnim, fromAnim, 1);
-				splitBodyAnimator.LegsAnimationPlayer.SetBlendTime(fromAnim, toAnim, 1);
-				splitBodyAnimator.LegsAnimationPlayer.SetBlendTime(toAnim, fromAnim, 1);
+				splitBodyAnimator.TorsoAnimationPlayer.SetBlendTime(fromAnim, toAnim, 0.3);
+				splitBodyAnimator.TorsoAnimationPlayer.SetBlendTime(toAnim, fromAnim, 0.3);
+				splitBodyAnimator.LegsAnimationPlayer.SetBlendTime(fromAnim, toAnim, 0.3);
+				splitBodyAnimator.LegsAnimationPlayer.SetBlendTime(toAnim, fromAnim, 0.3);
 			}
 		}
 	}

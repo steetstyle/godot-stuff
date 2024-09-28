@@ -1,6 +1,5 @@
 using Common.Playable.Input;
 using Common.Playable.Move;
-using Godot;
 
 namespace Common.Playable.BasicCharacter.Move;
 
@@ -30,10 +29,8 @@ public partial class BasicCharacterIdleMove : AMove
     {
     }
 
-    // Reset the animator speed when exiting the state
     public override void OnExitState()
     {
-        SplitBodyAnimator.SetSpeedScale(1);
     }
 
     public override int GetPriority()
