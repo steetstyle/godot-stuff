@@ -1,3 +1,4 @@
+using Common.Playable.Animation;
 using Common.Playable.Input;
 using Common.Playable.Move;
 using Godot;
@@ -9,7 +10,9 @@ public partial class Model : Node
 	[Export] public bool IsEnemy;
 	[Export] public CharacterBody3D Playable;
 	[Export] public HumanoidStates HumanoidStates;
+	[Export] public TransitionModifier MainAnimator;
 	[Export] public Resource Resource;
+	[Export] public string FirstMove = "Idle";
 	private AMove _currentMove;
 
 	public override void _Ready()
@@ -18,9 +21,11 @@ public partial class Model : Node
 		Playable ??= GetNode<CharacterBody3D>("..");
 
 		HumanoidStates.Humanoid = Playable;
+		HumanoidStates.MainAnimator = MainAnimator;
+		HumanoidStates.Resource = Resource;
+		
 		HumanoidStates.AcceptMoves();
-		_currentMove = HumanoidStates.GetMoveByName("Idle");
-		HumanoidStates.SplitBodyAnimator.Model = this;
+		_currentMove = HumanoidStates.GetMoveByName(FirstMove);
 		EnterMove();
 	}
 
@@ -49,6 +54,6 @@ public partial class Model : Node
 		_currentMove.OnEnterState();
 		_currentMove.MarkEnterState();
 		Resource.Pay(_currentMove);
-		HumanoidStates.SplitBodyAnimator.UpdateBodyAnimations();
+		_currentMove.Animate();
 	}
 }

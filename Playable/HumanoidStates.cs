@@ -8,9 +8,9 @@ namespace Common.Playable;
 
 public partial class HumanoidStates : Node
 {
-    [Export] public CharacterBody3D Humanoid;
-    [Export] public SplitBodyAnimator SplitBodyAnimator;
-    [Export] public Resource Resource;
+    public CharacterBody3D Humanoid;
+    public TransitionModifier MainAnimator;
+    public Resource Resource;
     [Export] public MoveRepository MoveRepository;
     [Export] public CameraMount CameraMount;
 
@@ -18,17 +18,18 @@ public partial class HumanoidStates : Node
    
     public void AcceptMoves()
     {
+        
         foreach (var children in GetChildren())
         {
             if (children is not AMove move) continue;
 
             move.BuildMove(
                 Humanoid,
-                SplitBodyAnimator,
                 Resource,
                 MoveRepository,
                 CameraMount,
-                this
+                this,
+                MainAnimator
             );
             move.Duration = MoveRepository.GetDuration(move.BackendAnimation);
             Moves.Add(move.Name, move);

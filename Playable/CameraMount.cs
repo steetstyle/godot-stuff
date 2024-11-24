@@ -46,7 +46,7 @@ namespace Common.Playable
             else if (distanceFromPlayer < _minDistance)
             {
                 // If the camera is too close, move it back to maintain a minimum distance
-                MoveCameraAwayFromPlayer((float)delta, playerPosition);
+                //MoveCameraAwayFromPlayer((float)delta, playerPosition);
             }
             else
             {

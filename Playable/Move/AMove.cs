@@ -42,17 +42,12 @@ public abstract partial class AMove : Node
 
     public void _Update(IInputPackage inputPackage, double delta)
     {
-        if (TracksPartialMove())
-            TransitionLegsState(inputPackage, delta);
         UpdateResources(delta);
         if (TracksInputVector(delta))
             ProcessInputVector(inputPackage, delta);
         Update(inputPackage, delta);
     }
 
-    protected abstract void TransitionLegsState(IInputPackage inputPackage, double delta);
-
-    public abstract bool TracksPartialMove();
 
     protected abstract void Update(IInputPackage inputPackage, double delta);
 
@@ -60,14 +55,6 @@ public abstract partial class AMove : Node
     {
         Resource.Update(delta);
     }
-
-    protected void ChangeLegState(string moveName)
-    {
-        CurrentLegMove = Container.GetMoveByName(moveName);
-        SplitBodyAnimator.UpdateLegAnimations();
-    }
-
-    public AMove CurrentLegMove { get; set; }
 
     private bool TracksInputVector(double delta)
     {
@@ -121,7 +108,7 @@ public abstract partial class AMove : Node
     }
 
     protected CharacterBody3D Humanoid { get; set; }
-    protected SplitBodyAnimator SplitBodyAnimator { get; set; }
+    protected TransitionModifier MainAnimator { get; set; }
     protected Resource Resource { get; set; }
     protected HumanoidStates Container { get; set; }
     protected MoveRepository MoveRepository { get; set; }
@@ -139,17 +126,27 @@ public abstract partial class AMove : Node
         return 0;
     }
 
+    public virtual void Animate()
+    {
+        MainAnimator.TransitionToAnimator(Animation, 0.0f, 0.2f);
+    }
+
+    public virtual void OnAnimationComplete()
+    {
+        
+    }
+
     public void BuildMove(
         CharacterBody3D humanoid,
-        SplitBodyAnimator splitBodyAnimator,
         Resource resource, 
         MoveRepository moveRepository, 
         CameraMount cameraMount,
-        HumanoidStates container
+        HumanoidStates container,
+        TransitionModifier mainAnimator
     )
     {
         Humanoid = humanoid;
-        SplitBodyAnimator = splitBodyAnimator;
+        MainAnimator = mainAnimator;
         Resource = resource;
         MoveRepository = moveRepository;
         CameraMount = cameraMount;

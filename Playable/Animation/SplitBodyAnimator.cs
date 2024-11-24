@@ -24,7 +24,7 @@ public partial class SplitBodyAnimator : Node
 	{
 		var currentMove = Model.GetCurrentMove();
 		UpdatePlayMode();
-		PlayLegAnimation(currentMove.CurrentLegMove.Animation);
+		//PlayLegAnimation(currentMove.CurrentLegMove.Animation);
 	}
 
 	private void UpdateAnimations()
@@ -77,7 +77,7 @@ public partial class SplitBodyAnimator : Node
 	private void UpdatePlayMode()
 	{
 		var modelCurrentMove = Model.GetCurrentMove();
-		FullBodyMode = !modelCurrentMove.TracksPartialMove();
+		//FullBodyMode = !modelCurrentMove.TracksPartialMove();
 	}
 
 	public void SetSpeedScale(float speedScale)
